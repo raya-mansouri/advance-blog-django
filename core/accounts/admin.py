@@ -12,9 +12,19 @@ class CustomUserAdmin(UserAdmin):
                 "email", "password",
             )}
         ),
-        ('Permisions', {
+        ('Permissions', {
             "fields": (
                 "is_active", "is_staff",'is_superuser'
+            )}
+        ),
+        ('Group Permissions', {
+            "fields": (
+                "groups", "user_permissions",
+            )}
+        ),
+        ('Impostant Dates', {
+            "fields": (
+                "last_login",
             )}
         ),
     )
