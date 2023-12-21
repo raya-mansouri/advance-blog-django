@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.utils import timezone
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
-
+from django.views.generic.detail import DetailView
 from blog.models import Post
 
 
@@ -40,5 +40,11 @@ class PostListView(ListView):
     paginate_by = 3  # if pagination is desired
     context_object_name = 'posts'
 
-    
+class PostDetailView(DetailView):
+    model = Post
+    context_object_name = 'post'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["now"] = timezone.now()
+        return context    
 

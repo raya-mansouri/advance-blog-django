@@ -2,7 +2,7 @@
 <ul>
   {% for post in posts %}
     <li>
-      <h3>{{ post.title }}</h3>
+      <h3><a href="{% url 'blog:post-detail' pk=post.id %}">{{ post.title }}</a></h3>
     </li>
     <small>{{ post.published_date|date }}</small>
     {% empty %}

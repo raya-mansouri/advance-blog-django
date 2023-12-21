@@ -1,0 +1,6 @@
+<h1>{{ post.title }}</h1>
+<p>{{ post.content }}</p>
+<small>Published: {{ post.published_date|date }}</small>
+<h6>Date: {{ now|date }}</h6>
+<hr>
+<small ><a href="{% url 'blog:post-list' %}">Go back</a></small>

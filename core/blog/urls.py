@@ -7,7 +7,8 @@ app_name = 'blog'
 
 urlpatterns = [
     path("", IndexView.as_view(), name="index"),
-    path('posts/',PostListView.as_view(), name='post_list'),
+    path('post/',PostListView.as_view(), name='post-list'),
+    path("<pk>/", PostDetailView.as_view(), name="post-detail"),
     path(
         "go-to-index/",
         RedirectView.as_view(pattern_name='blog:index'),
