@@ -28,7 +28,7 @@ class PostListView(ListView):
     #1
     model = Post
 
-    #2
+    #2 - we cant use order_by()
     def get_queryset():
         posts = Post.objects.all()
         return posts
@@ -36,8 +36,8 @@ class PostListView(ListView):
     #3
     """
     queryset = Post.objects.filter(status=True)
-    
-    paginate_by = 2  # if pagination is desired
+    ordering = '-id'
+    paginate_by = 3  # if pagination is desired
     context_object_name = 'posts'
 
     
