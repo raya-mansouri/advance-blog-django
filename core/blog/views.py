@@ -37,7 +37,7 @@ class PostListView(ListView):
     """
     queryset = Post.objects.filter(status=True)
     
-    paginate_by = 5  # if pagination is desired
+    paginate_by = 2  # if pagination is desired
     context_object_name = 'posts'
 
     
