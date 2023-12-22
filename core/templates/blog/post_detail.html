@@ -1,8 +1,9 @@
 <h1>{{ post.title }}</h1>
+<p>{{ post.author.last_name }}</p>
 <p>{{ post.content }}</p>
 <small>Published: {{ post.published_date|date }}</small>
 <h6>Date: {{ now|date }}</h6>
-{% if post.author == user %}
+{% if post.author.user == user %}
 <a style='background-color: #548aff; color: white;' href="{% url 'blog:post-update' pk=post.id %}">Edit</a>
 <a style='background-color: #f44336; color: white;' href="{% url 'blog:post-delete' pk=post.id %}">Delete</a>
 {% endif %}
