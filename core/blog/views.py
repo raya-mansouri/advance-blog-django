@@ -1,9 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from django.urls import reverse_lazy
 from django.utils import timezone
-from django.views.generic.base import TemplateView
-from django.views.generic.list import ListView
-from django.views.generic.detail import DetailView
-from blog.models import Post
+
+from django.views.generic import TemplateView, ListView, CreateView, DetailView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+from .models import Post
+from .forms import PostForm
 
 
 class IndexView(TemplateView):
@@ -24,7 +27,7 @@ class IndexView(TemplateView):
 class PostListView(ListView):
     """ 
     get query in different ways
-    
+
     #1
     model = Post
 
@@ -32,7 +35,7 @@ class PostListView(ListView):
     def get_queryset():
         posts = Post.objects.all()
         return posts
-    
+
     #3
     """
     queryset = Post.objects.filter(status=True)
@@ -40,11 +43,31 @@ class PostListView(ListView):
     paginate_by = 3  # if pagination is desired
     context_object_name = 'posts'
 
+
 class PostDetailView(DetailView):
     model = Post
     context_object_name = 'post'
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["now"] = timezone.now()
-        return context    
+        return context
 
+
+class PostCreateView(LoginRequiredMixin, CreateView):
+    template_name = 'blog/post_form.html'
+    form_class = PostForm
+    success_url = reverse_lazy('blog:post-list')
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+
+
+class PostUpdateView(UpdateView):
+    pass
+
+
+class PostDeleteView(DeleteView):
+    pass
