@@ -2,5 +2,9 @@
 <p>{{ post.content }}</p>
 <small>Published: {{ post.published_date|date }}</small>
 <h6>Date: {{ now|date }}</h6>
+{% if post.author == user %}
+<a style='background-color: #548aff; color: white;' href="{% url 'blog:post-update' pk=post.id %}">Edit</a>
+<a style='background-color: #f44336; color: white;' href="{% url 'blog:post-delete' pk=post.id %}">Delete</a>
+{% endif %}
 <hr>
 <small ><a href="{% url 'blog:post-list' %}">Go back</a></small>
