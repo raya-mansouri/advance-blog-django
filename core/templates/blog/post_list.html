@@ -1,5 +1,7 @@
 <h1>Post</h1>
+{% comment %} {% if user.is_authenticated %} {% endcomment %}
 <a type='button' href="{% url 'blog:post-create' %}">Add new One</a>
+{% comment %} {% endif %} {% endcomment %}
 <ul>
   {% for post in posts %}
     <li>
