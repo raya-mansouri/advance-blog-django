@@ -66,7 +66,10 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
 
 class PostUpdateView(UpdateView):
-    pass
+    model = Post
+    form_class = PostForm 
+    success_url = reverse_lazy('blog:post-list')
+    template_name_suffix = '_form'
 
 
 class PostDeleteView(DeleteView):

@@ -1,10 +1,13 @@
 <h1>Post</h1>
+<button href="{% url 'blog:post-create' %}">Add new One</button>
 <ul>
   {% for post in posts %}
     <li>
       <h3><a href="{% url 'blog:post-detail' pk=post.id %}">{{ post.title }}</a></h3>
     </li>
     <small>{{ post.published_date|date }}</small>
+    <a style='background-color: #548aff; color: white;' href="{% url 'blog:post-update' pk=post.id %}">Edit</a>
+    <a style='background-color: #f44336; color: white;' href="{% url 'blog:post-delete' pk=post.id %}">Delete</a>
     {% empty %}
     <li>No post yet.</li>
   {% endfor %}
