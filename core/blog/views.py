@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.views.generic import TemplateView, ListView, CreateView, DetailView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+from django.views import View
 from .models import Post
 from .forms import PostForm
 
@@ -64,10 +65,9 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-
 class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
-    form_class = PostForm 
+    form_class = PostForm
     success_url = reverse_lazy('blog:post-list')
     template_name_suffix = '_form'
 
@@ -75,3 +75,14 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
 class PostDeleteView(LoginRequiredMixin, DeleteView):
     model = Post
     success_url = reverse_lazy("blog:post-list")
+
+
+class PostStatusToFalse(LoginRequiredMixin, View):
+    model = Post
+    success_url = reverse_lazy("blog:post-list")
+
+    def get(self, request, *args, **kwargs):
+        object = Post.objects.get(id=kwargs.get("pk"))
+        object.status = False
+        object.save()
+        return redirect(self.success_url)

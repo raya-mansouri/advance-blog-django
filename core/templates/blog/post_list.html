@@ -1,30 +1,52 @@
-<h1>Post</h1>
-{% comment %} {% if user.is_authenticated %} {% endcomment %}
-<a type='button' href="{% url 'blog:post-create' %}">Add new One</a>
-{% comment %} {% endif %} {% endcomment %}
-<ul>
-  {% for post in posts %}
-    <li>
-      <h3><a href="{% url 'blog:post-detail' pk=post.id %}">{{ post.title }}</a></h3>
-    </li>
-    <small>{{ post.published_date|date }}</small>
-    {% empty %}
-    <li>No post yet.</li>
-  {% endfor %}
-</ul>
-
-<div class="pagination">
-  <span class="step-links">
-    {% if page_obj.has_previous %}
-      <a href="?page=1">&laquo; first</a>
-      <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Posts</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  </head>
+  <body>
+    <h1>Post</h1>
+    {% if user.is_authenticated %}
+      <div style="text-align: right;">
+        <a href="{% url 'blog:post-create' %}">Add new One</a>
+        <a class="dropdown-item" href="{% url 'logout' %}?next={% url 'blog:post-list' %}">Logout</a>
+      </div>
+    {% else %}
+      <div  style="text-align: right;">
+      <a class="nav-link" href="{% url 'login' %}?next={% url 'blog:post-list' %}">Login</a>
+      </div>
     {% endif %}
+    <ul>
+      {% for post in posts %}
+        <li>
+          <h3>
+            <a href="{% url 'blog:post-detail' pk=post.id %}">{{ post.title }}</a>
+            {% if request.user.is_superuser %}
+            <a href="{% url 'blog:post-status' pk=post.id %}"><i style="font-size:24px" class="fa">&#xf058;</i></a>
+            {% endif %}
+          </h3>
+        </li>
+        <small>{{ post.published_date|date }}</small>
+        {% empty %}
+        <li>No post yet.</li>
+      {% endfor %}
+    </ul>
 
-    <span class="current">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</span>
+    <div class="pagination" style="text-align: center;">
+      <span class="step-links">
+        {% if page_obj.has_previous %}
+          <a href="?page=1">&laquo; first</a>
+          <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
 
-    {% if page_obj.has_next %}
-      <a href="?page={{ page_obj.next_page_number }}">next</a>
-      <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-    {% endif %}
-  </span>
-</div>
+        <span class="current">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</span>
+
+        {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}">next</a>
+          <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+      </span>
+    </div>
+  </body>
+</html>
