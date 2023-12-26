@@ -1,2 +1,5 @@
 django==4.2
 python-decouple #https://pypi.org/project/python-decouple/
+djangorestframework #https://www.django-rest-framework.org/
+markdown       # Markdown support for the browsable API.
+django-filter  # Filtering support
