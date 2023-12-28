@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
@@ -26,6 +26,8 @@ class PostList(APIView):
     View a list of all posts and creating new post.
 
     """
+    permission_classes = [IsAuthenticated]
+    serializer_class = PostSerializer
 
     def get(self, request, format=None):
         posts = Post.objects.filter(status=True)
