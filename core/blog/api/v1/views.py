@@ -3,11 +3,17 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticate
 from rest_framework.response import Response
 from rest_framework import status, mixins, viewsets
 
-from .serializers import PostSerializer
-from blog.models import Post
+from .serializers import CategorySerializer, PostSerializer
+from blog.models import Post, Category
 
 
-class PostViewSet(viewsets.ModelViewSet):
+class PostModelViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = PostSerializer
     queryset = Post.objects.filter(status=True)
+
+
+class CategoryModelViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    serializer_class = CategorySerializer
+    queryset = Category.objects.all()
