@@ -6,10 +6,10 @@ from rest_framework.decorators import action
 
 from .serializers import CategorySerializer, PostSerializer
 from blog.models import Post, Category
-
+from .permissions import IsOwnerOrReadOnly
 
 class PostModelViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
     serializer_class = PostSerializer
     queryset = Post.objects.filter(status=True)
 
