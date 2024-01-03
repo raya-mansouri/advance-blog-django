@@ -9,6 +9,7 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from .serializers import CategorySerializer, PostSerializer
 from blog.models import Post, Category
 from .permissions import IsOwnerOrReadOnly
+from .paginations import StandardPagination
 
 class PostModelViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
@@ -18,6 +19,7 @@ class PostModelViewSet(viewsets.ModelViewSet):
     filterset_fields = ['category', 'author', 'status']
     search_fields = ['title', 'content']
     ordering_fields = ['published_date']
+    pagination_class = StandardPagination
 
     @action(methods=['get'], detail=False)
     def get_ok(self, request):
